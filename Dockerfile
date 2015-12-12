@@ -1,26 +1,24 @@
 FROM debian:jessie
 
-RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
-    libglib2.0-0 libxext6 libsm6 libxrender1 && \
+RUN apt-get update --fix-missing && apt-get install -y \
+    libglib2.0-0 libxext6 libsm6 libxrender1 \
+    ca-certificates busybox wget && \
+    busybox --install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-ENV PATH /opt/conda/bin:$PATH
-ENV LANG C.UTF-8
-ENV MINICONDA Miniconda3-3.18.3-Linux-x86_64.sh
+ENV PATH=/opt/conda/bin:$PATH \
+    LANG=C.UTF-8 \
+    MINICONDA=Miniconda3-latest-Linux-x86_64.sh
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/$MINICONDA && \
     bash /$MINICONDA -b -p /opt/conda && \
-    rm $MINICONDA && \
-    conda install -y conda==3.18.3 && \
+    conda install -y conda && \
     conda update -y conda && \
     conda install -y jupyter && \
     pip install pulp unionfind && \
-    rm -rf /opt/conda/pkgs/*
+    rm -rf $MINICONDA /opt/conda/pkgs/*
 EXPOSE 8888
 VOLUME ["/jupyter"]
 WORKDIR /jupyter
-COPY data /root/tmp/data/
-COPY pic /root/tmp/pic/
-COPY *.ipynb /root/tmp/
-COPY init.sh /root/
-CMD ["sh", "/root/init.sh"]
+COPY puzzle.tar.gz /root/
+CMD ["sh", "-c", "tar xzf /root/puzzle.tar.gz -C /jupyter && jupyter notebook --ip=*"]
