@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu-debootstrap:14
 
 RUN apt-get update --fix-missing && apt-get install -y \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
