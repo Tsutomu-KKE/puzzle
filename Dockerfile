@@ -3,7 +3,7 @@ FROM ubuntu-debootstrap:14.04
 RUN apt-get update --fix-missing && apt-get install -y \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     ca-certificates busybox wget && \
-    busybox --install && \
+    /bin/busybox --install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 ENV PATH=/opt/conda/bin:$PATH \
