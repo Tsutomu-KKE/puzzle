@@ -1,4 +1,4 @@
-﻿Jupyter for solving puzzle
+﻿Jupyter for solving puzzle. [![](https://badge.imagelayers.io/tsutomu7/puzzle:latest.svg)](https://imagelayers.io/?images=tsutomu7/puzzle:latest)
 ======
 
 See http://nbviewer.ipython.org/gist/Tsutomu-KKE/1b526ed7ef2ab111c829
